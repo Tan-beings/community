@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <title>Title</title>
+    <style>
+        body{
+            background: #efefef;
+        }
+        .publish-panel{
+            padding:24px 64px;
+            border-radius: 10px;
+        }
+        .input-title{
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+            color: #555;
+            text-align: center;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+
+        }
+
+        .input-groups{
+            display: flex;
+            flex-direction: column;
+            gap:24px;
+            justify-items: center;
+        }
+
+        .publish-edit-panel{
+            padding-bottom:24px;
+            border-bottom: #fff 1px solid;
+        }
+
+        #question-submit{
+            align-self: flex-end;
+        }
+
+        .second-title{
+            margin:0;
+            margin-bottom: 20px;
+        }
+
+        a:link,
+        a:visited{
+            text-decoration: none;
+            color:inherit;
+        }
+        a:hover{
+            color:#222;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">南特师BBS</span>
+            </button>
+            <a class="navbar-brand" href="#">南特师BBS</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索话题">
+                </div>
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.CurrentUser == null}"><a href="https://github.com/login/oauth/authorize?client_id=4e3f6fd327f408f7263f&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
+                <li th:if="${session.CurrentUser != null}" class="dropdown">
+                    <a th:text="${session.CurrentUser.name}" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">谭荃丹 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">个人资料</a></li>
+                        <li><a href="#">消息中心</a></li>
+                        <li><a href="#">退出登录</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<main class="publish-panel">
+<div class="row">
+    <div class="publish-edit-panel col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <h2 class="second-title">
+            <a href="/publish">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            编辑问题</a>
+        </h2>
+        <form action="/doPublish" class="input-groups" method="post">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">标题</span>
+                <input type="text" class="form-control" name="question_title" placeholder="概括你的问题" th:value="${question_title}" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <span class="input-title">问题描述</span>
+                <textarea class="form-control" rows="10" id="textarea_question_input" name="question_description" placeholder="请输入你的问题" th:text="${question_description}" aria-describedby="basic-addon1"></textarea>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon">标签</span>
+                <input type="text" class="form-control" id="tag" name="question_tag" th:value="${question_tag}" placeholder="输入标签,分隔符：‘，’"/>
+            </div>
+            <button type="submit" id="question-submit" class="btn btn-default">Submit</button>
+            <div class="alert alert-danger" role="alert" th:if="${error!=null}" th:text="'提交失败,'+${error}"></div>
+        </form>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <h3>问题发起指南</h3>
+        <p>·<b>问题标题</b>:请用精简的语言描述您发布的问题，不超过25字</p>
+        <p>·<b>问题补充</b>:详细补充您的问题内容，并确保问题描述清晰直观,并提供一些相关的资料:</p>
+        <p>·服务器运行环境信息;·软件版本;</p>
+        <p>·问题发生的上下文信息;</p>
+        <p>·可以完整复现问题的代码(如可直接运行于 Kibana Console的复现流程);。补充完整的异常和错误信息;</p>
+        <p>·注意阅读格式友好，代码和异常信息请用代码标签格式化张贴;</p>
+    </div>
+</div>
+</main>
+
+</body>
+</html>

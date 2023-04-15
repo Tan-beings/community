@@ -2,8 +2,11 @@ package com.tanquandan.blogsystem.Provider;
 
 import com.alibaba.fastjson2.JSON;
 import com.tanquandan.blogsystem.DTO.AccessToken;
+import com.tanquandan.blogsystem.DTO.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class GithubProvider {
@@ -29,7 +32,7 @@ public class GithubProvider {
         return null;
     }
 
-    public String GetUser(String AccessToken) {
+    public GithubUser GetUser(String AccessToken) {
         OkHttpClient client = new OkHttpClient();
         try {
             Request request = new Request.Builder()
@@ -38,7 +41,9 @@ public class GithubProvider {
                     .build();
 
             try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
+                String str = response.body().string();
+                System.out.println("AccessToken: "+str);
+                return JSON.parseObject(str, GithubUser.class);
             }
         } catch (Exception e) {
             e.printStackTrace();
