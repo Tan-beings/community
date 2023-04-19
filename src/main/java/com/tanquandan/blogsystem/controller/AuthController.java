@@ -47,7 +47,7 @@ public class AuthController {
 
         String token = githubProvider.GetAccessToken(accessToken);
         GithubUser githubUser = githubProvider.GetUser(token);
-        System.out.println("name: "+githubUser.getLogin());
+
         if(githubUser != null && githubUser.getId() != null){
             User u = new User();
             u.setAccount_id(githubUser.getId()+"");
@@ -56,6 +56,7 @@ public class AuthController {
             u.setGmt_create(System.currentTimeMillis());
             u.setGmt_modified(u.getGmt_create());
             u.setBio(githubUser.getBio());
+            u.setAvatar(githubUser.getAvatar_url());
             userMapper.insert(u);
             response.addCookie(new Cookie("token",u.getToken()));
         }

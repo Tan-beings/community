@@ -1,4 +1,4 @@
-package com.tanquandan.blogsystem.DTO;
+package com.tanquandan.blogsystem.DAO;
 
 public class Question {
     private int id;

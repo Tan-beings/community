@@ -10,50 +10,146 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <style>
+        body{
+            background: #efefef;
+        }
+        main{
+            padding:24px 64px;
+            border-radius: 10px;
+
+        }
+        .second-title{
+            margin:0;
+            margin-bottom: 20px;
+        }
+
+        .fourth-title{
+            font-weight: 600;
+        }
+        .question-content{
+            padding:1px;
+        }
+
+        a:link,
+        a:visited{
+            text-decoration: none;
+            color:inherit;
+        }
+        a:hover{
+            color:#222;
+        }
+
+        .nav-tabs{
+          margin-bottom: 10px;
+            border:none;
+        }
+
+        .user-avatar{
+            width: 50px;
+        }
+
+        .question-content-info{
+            font-size: 12px;
+            color:#aaa;
+        }
+
+        .question-content{
+            /*溢出部分隐藏起来*/
+            overflow: hidden;
+            /*文本溢出时用省略号来显示*/
+            text-overflow: ellipsis;
+            /*弹性伸缩盒子模型显示*/
+            display: -webkit-box;
+            /*限制在一个块元素显示文本的行数*/
+            -webkit-line-clamp: 2;/*2行*/
+            /*设置或检索伸缩盒对象子元素的排列方式*/
+            -webkit-box-orient: vertical;
+        }
+    </style>
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">南特师BBS</span>
-            </button>
-            <a class="navbar-brand" href="#">南特师BBS</a>
-        </div>
+<nav th:insert="navigation :: nav"></nav>
+<main>
+    <div class="publish-edit-panel col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <nav>
+            <h2 class="second-title">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <a href="/index">发现</a>
+            </h2>
+        </nav>
+    <div class="main-pages">
+    <div class="nav-tabs">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="question:${PaginationList.questions}"
+        ><div class="media">
+            <div class="media-left media-middle">
+                <a href="#">
+                    <img class="media-object user-avatar" th:attr="src=${question.user.avatar}" alt="avatar">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading fourth-title">
+                    <a href="#" th:text="${question.title}">夏天的冰西瓜</a></h4>
+                <p class="question-content" th:text="${question.description}">...</p>
+                <span class="question-content-info"><span class="question-comment-count" th:text="${question.comment_count}">0</span>个评论</span>
+                <span class="question-content-info"><span class="question-view-count" th:text="${question.view_count}">729</span>次浏览</span>
+                <span class="question-content-info"><span class="question-view-count" th:text="${question.comment_count}">2 </span>天前</span>
+            </div>
+        </div></li>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    </ul>
+    </div>
+    <div aria-label="..."  >
+        <ul class="pagination" >
+            <li>
+                <a th:href="'/?startNumber='+${PaginationList.currentPage+1}" aria-label="Previous" th:if="${PaginationList.showPrevious}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="pageNumber:${PaginationList.pageNumberList}"
+                th:class="${pageNumber==PaginationList.currentPage?'active':''}">
+                <a th:href="'/?startNumber='+${pageNumber}"  th:text="${pageNumber}">1</a>
+            </li>
+            <li><a th:href="'/?startNumber='+${PaginationList.currentPage+1}" aria-label="Next" th:if="${PaginationList.showNext}"><span aria-hidden="true">&raquo;</span></a>
+        </ul>
 
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索话题">
-                </div>
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
+        </a>
+    </div>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <nav>
+            <h2 class="second-title">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
 
-                <li th:if="${session.CurrentUser == null}"><a href="https://github.com/login/oauth/authorize?client_id=4e3f6fd327f408f7263f&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
-                <li th:if="${session.CurrentUser != null}">
-                    <a href="/publish">发布</a>
-                </li>
-                <li th:if="${session.CurrentUser != null}" class="dropdown">
-                    <a th:text="${session.CurrentUser.name}" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">谭荃丹 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">退出登录</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+                <a href="/index">最新发布</a>
+            </h2>
+        </nav>
+        常用链接
+        <ul>
+            <li>Elastic 官方网站</li>
+            <li>Elastic Github</li>
+            <li>Elasticsearch 权威指南中文版(2.x)</li>
+            <li>Kibana 中文手册(6.0)</li>
+            <li>Elasticsearch-PHP 中文手册(6.0)</li>
+            <li>Elastic 官方技术博客</li>
+            <li>Elastic 搜索开发实战</li>
+            <li>Elastic 社区分享回放</li>
+            <li>Elastic 社区电台节目</li>
+            <li>Elastic 社区百格活动</li>
+            <li>Elastic 社区Meetup</li>
+            <li>Elastic 社区用户大会</li>
+            <li>Elastic 社区IT大咖说</li>
+        </ul>
+    </div>
+</main>
 
 </body>
 </html>

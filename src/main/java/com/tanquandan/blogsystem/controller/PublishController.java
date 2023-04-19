@@ -1,21 +1,30 @@
 package com.tanquandan.blogsystem.controller;
 
 import com.tanquandan.blogsystem.DAO.User;
-import com.tanquandan.blogsystem.DTO.Question;
+import com.tanquandan.blogsystem.DAO.Question;
 import com.tanquandan.blogsystem.Mapper.QuestionMapper;
+import com.tanquandan.blogsystem.Mapper.UserMapper;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+
 @Controller
 public class PublishController {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @GetMapping("/publish")
     public String toPublish(){
@@ -27,12 +36,13 @@ public class PublishController {
                             @RequestParam("question_title")String title,
                             @RequestParam("question_description")String description,
                             @RequestParam("question_tag")String tag,
-                            HttpSession session){
+                            HttpSession session,
+                            HttpServletRequest request){
 
         model.addAttribute("question_title",title);
         model.addAttribute("question_description",description);
         model.addAttribute("question_tag",tag);
-        // 先检验数据，如果数据不合法，直接往Model里setError
+        // (本来是前端的任务...)先检验数据，如果数据不合法，直接往Model里setError
         if(title == null || title.equals("")){
             model.addAttribute("error","标题信息不能为空");
             return "/publish";
@@ -44,6 +54,17 @@ public class PublishController {
         if(tag == null || tag.equals("")){
             model.addAttribute("error","标签信息不能为空");
             return "/publish";
+        }
+
+        Cookie[] cookies = request.getCookies();
+        System.out.println("cookies: "+ Arrays.toString(cookies));
+        if(cookies != null) {
+            for (Cookie e : cookies) {
+                if (e.getName().equals("token")) {
+                    User current_user = userMapper.findByToken(e.getValue());
+                    request.getSession().setAttribute("CurrentUser", current_user);
+                }
+            }
         }
 
         // 插入数据
