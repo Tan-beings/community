@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  <style>
+    body{
+      background: #efefef;
+    }
+    main{
+      padding:24px 64px;
+      border-radius: 10px;
+
+    }
+    .second-title{
+      margin:0;
+      margin-bottom: 20px;
+    }
+
+    .fourth-title{
+      font-weight: 600;
+    }
+    .question-content{
+      padding:1px;
+    }
+
+    a:link,
+    a:visited{
+      text-decoration: none;
+      color:inherit;
+    }
+    a:hover{
+      color:#222;
+    }
+
+    .nav-tabs{
+      margin-bottom: 10px;
+      border:none;
+    }
+
+    .user-avatar{
+      width: 50px;
+    }
+
+    .question-content-info{
+      font-size: 12px;
+      color:#aaa;
+    }
+
+    .question-content{
+      /*溢出部分隐藏起来*/
+      overflow: hidden;
+      /*文本溢出时用省略号来显示*/
+      text-overflow: ellipsis;
+      /*弹性伸缩盒子模型显示*/
+      display: -webkit-box;
+      /*限制在一个块元素显示文本的行数*/
+      -webkit-line-clamp: 2;/*2行*/
+      /*设置或检索伸缩盒对象子元素的排列方式*/
+      -webkit-box-orient: vertical;
+    }
+  </style>
+  <title>Title</title>
+</head>
+<body>
+<nav th:insert="navigation :: nav"></nav>
+<main>
+  <div class="publish-edit-panel col-lg-9 col-md-12 col-sm-12 col-xs-12">
+    <ul class="list-group">
+      <li class="list-group-item" th:each="question:${PaginationList.questions}"
+      ><div class="media">
+        <div class="media-left media-middle">
+          <a href="#">
+            <img class="media-object user-avatar" th:attr="src=${question.user.avatar}" alt="avatar">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading fourth-title">
+            <a href="#" th:text="${question.title}">夏天的冰西瓜</a></h4>
+          <p class="question-content" th:text="${question.description}">...</p>
+          <span class="question-content-info"><span class="question-comment-count" th:text="${question.comment_count}">0</span>个评论</span>
+          <span class="question-content-info"><span class="question-view-count" th:text="${question.view_count}">729</span>次浏览</span>
+          <span class="question-content-info"><span class="question-view-count" th:text="${question.comment_count}">2 </span>天前</span>
+        </div>
+      </div></li>
+    </ul>
+    </div>
+  <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+    <div class="list-group">
+      <a href="/profile/questions" th:class="${section=='questions'}?'list-group-item active':'list-group-item'">我的问题</a>
+      <a href="/profile/replies" th:class="${section=='replies'}?'list-group-item active':'list-group-item'">最新回复</a>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

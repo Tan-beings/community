@@ -19,23 +19,40 @@ public class QuestionService {
     @Autowired
     UserMapper userMapper;
 
-    public PaginationDTO list(int currentPage, int size){
+    public PaginationDTO listAllQuestions(int currentPage, int size){
         int offset = (currentPage-1)*size;
 
         List<Question> tmp_questions = questionMapper.selectAllQuestions(offset, size);
         int questionsAmounts = questionMapper.selectAllQuestionsCount();
 
+        List<QuestionDTO> questions = setQuestions(tmp_questions);
+        PaginationDTO paginationDTO = new PaginationDTO(questions,currentPage,size,questionsAmounts);
+        paginationDTO.setPagination();
+        return paginationDTO;
+    }
+
+    public PaginationDTO listQuestionsByUser(String account_id,int currentPage, int size){
+        int offset = (currentPage-1)*size;
+
+        List<Question> tmp_questions = questionMapper.selectQuestionsByAccountId(account_id,offset, size);
+        int questionsAmounts = questionMapper.selectQuestionsByAccountIdCount(account_id);
+
+        List<QuestionDTO> questions = setQuestions(tmp_questions);
+        PaginationDTO paginationDTO = new PaginationDTO(questions,currentPage,size,questionsAmounts);
+        paginationDTO.setPagination();
+        return paginationDTO;
+    }
+
+
+
+    public List<QuestionDTO> setQuestions(List<Question> tmp_questions){
         List<QuestionDTO> questions = new ArrayList<>();
         for (Question question : tmp_questions) {
             QuestionDTO target_question = new QuestionDTO();
             BeanUtils.copyProperties(question,target_question);
             target_question.setUser(userMapper.findById(question.getCreator()));
-            System.out.println(target_question.getUser());
             questions.add(target_question);
         }
-
-        PaginationDTO paginationDTO = new PaginationDTO(questions,currentPage,size,questionsAmounts);
-        paginationDTO.setPagination();
-        return paginationDTO;
+        return questions;
     }
 }

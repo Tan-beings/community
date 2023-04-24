@@ -34,12 +34,12 @@
         </li>
 
         <li th:if="${session.CurrentUser != null}" class="dropdown">
-           <a class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span th:text="${session.CurrentUser.name}"></span>
            </a>
           <ul class="dropdown-menu" onclick="">
-            <li><a href="#">个人资料</a></li>
+            <li><a href="/profile/questions">个人资料</a></li>
             <li><a href="#">消息中心</a></li>
             <li><a href="#">退出登录</a></li>
             <li role="separator" class="divider"></li>

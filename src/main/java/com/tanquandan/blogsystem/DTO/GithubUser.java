@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 @Data
 public class GithubUser {
     private String login;
-    private Long id;
+    private String id;
     private String bio;
     private String avatar_url;
 }
