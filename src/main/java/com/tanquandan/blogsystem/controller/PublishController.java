@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -56,17 +57,6 @@ public class PublishController {
             return "/publish";
         }
 
-        Cookie[] cookies = request.getCookies();
-        System.out.println("cookies: "+ Arrays.toString(cookies));
-        if(cookies != null) {
-            for (Cookie e : cookies) {
-                if (e.getName().equals("token")) {
-                    User current_user = userMapper.findByToken(e.getValue());
-                    request.getSession().setAttribute("CurrentUser", current_user);
-                }
-            }
-        }
-
         // 插入数据
         Question q = new Question();
         q.setTitle(title);
@@ -78,4 +68,6 @@ public class PublishController {
         int insert = questionMapper.insert(q);
         return "redirect:/";
     }
+
+
 }

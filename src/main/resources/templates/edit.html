@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <title>Title</title>
     <style>
@@ -61,6 +62,10 @@
         a:hover{
             color:#222;
         }
+
+        .hidden{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -71,24 +76,25 @@
         <h2 class="second-title">
             <a href="/publish">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-            编辑问题</a>
+            修改问题</a>
         </h2>
-        <form action="/doPublish" class="input-groups" method="post">
+        <form  autocomplete="off" th:action="'/doEdit/'+${question_id}" method="post" onsubmit="return checkValidData();" class="input-groups">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">标题</span>
-                <input type="text" class="form-control" name="question_title" placeholder="概括你的问题" th:value="${question_title}" aria-describedby="basic-addon1">
+                <input type="text" class="form-control" id = "title" name="question_title" placeholder="概括你的问题" th:value="${question_title}" aria-describedby="basic-addon1">
             </div>
             <div class="input-group">
                 <span class="input-title">问题描述</span>
-                <textarea class="form-control" rows="10" id="textarea_question_input" name="question_description" placeholder="请输入你的问题" th:text="${question_description}" aria-describedby="basic-addon1"></textarea>
+                <textarea class="form-control" rows="10" id="description" name="question_description" placeholder="请输入你的问题" th:text="${question_description}" aria-describedby="basic-addon1"></textarea>
             </div>
-
             <div class="input-group">
                 <span class="input-group-addon">标签</span>
                 <input type="text" class="form-control" id="tag" name="question_tag" th:value="${question_tag}" placeholder="输入标签,分隔符：‘，’"/>
             </div>
+            <input type="hidden" name="id" th:value="${question_id}">
             <button type="submit" id="question-submit" class="btn btn-default">Submit</button>
-            <div class="alert alert-danger" role="alert" th:if="${error!=null}" th:text="'提交失败,'+${error}"></div>
+            <div class="alert alert-danger" role="alert" th:if="${error!=null}" th:text="${error}"></div>
+            <div class="alert alert-danger hidden alert-input" role="alert"></div>
         </form>
     </div>
     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -104,4 +110,35 @@
 </main>
 
 </body>
+
+<script type="text/javascript">
+    const alert = $(".alert-input");
+    const titleInput = $("#title");
+    const descriptionInput = $("#description");
+    const tagInput = $("#tag");
+    function checkValidData(){
+        console.log(titleInput.val());
+        console.log(descriptionInput.val());
+        console.log(tagInput.val());
+        if(titleInput.val() == null || titleInput.val().trim() === ""){
+            alert.html("标题输入不能为空");
+            alert.removeClass("hidden");
+            console.log("我进来了1");
+            return false;
+        }
+        if(descriptionInput.val() == null || descriptionInput.val().trim() === ""){
+            alert.html("内容输入不能为空");
+            alert.removeClass("hidden");
+            console.log("我进来了2");
+            return false;
+        }
+        if(tagInput.val() == null || tagInput.val().trim() === ""){
+            alert.html("标签输入不能为空");
+            alert.removeClass("hidden");
+            console.log("我进来了3");
+            return false
+        }
+        return true;
+    }
+</script>
 </html>

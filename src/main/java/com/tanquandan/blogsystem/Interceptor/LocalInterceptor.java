@@ -29,7 +29,7 @@ public class LocalInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        return false;
+        return true;
 
     }
 

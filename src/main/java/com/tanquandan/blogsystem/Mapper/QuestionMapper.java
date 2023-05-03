@@ -4,6 +4,7 @@ import com.tanquandan.blogsystem.DAO.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -24,4 +25,10 @@ public interface QuestionMapper {
 
     @Select("select count(*) from question where creator=#{id}")
     int selectQuestionsByAccountIdCount(String id);
+
+    @Select("select * from question where id=#{id}")
+    Question selectQuestionById(int id);
+
+    @Update("update question set title=#{title},description=#{description},tag=#{tag} where id=#{id}")
+    int updateQuestionById(String title,String description,String tag,int id);
 }

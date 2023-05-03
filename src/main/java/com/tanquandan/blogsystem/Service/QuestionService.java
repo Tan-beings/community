@@ -55,4 +55,17 @@ public class QuestionService {
         }
         return questions;
     }
+
+    public QuestionDTO setQuestion(Question question){
+            QuestionDTO target_question = new QuestionDTO();
+            BeanUtils.copyProperties(question,target_question);
+            target_question.setUser(userMapper.findById(question.getCreator()));
+            return target_question;
+    }
+
+    public QuestionDTO queryQuestionById(int id) {
+        Question question = questionMapper.selectQuestionById(id);
+        QuestionDTO target_question = setQuestion(question);
+        return target_question;
+    }
 }

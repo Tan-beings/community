@@ -5,9 +5,11 @@ import com.tanquandan.blogsystem.DTO.AccessToken;
 import com.tanquandan.blogsystem.DTO.GithubUser;
 import com.tanquandan.blogsystem.Mapper.UserMapper;
 import com.tanquandan.blogsystem.Provider.GithubProvider;
+import com.tanquandan.blogsystem.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class AuthController {
 
     @Autowired
     GithubProvider githubProvider;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserMapper userMapper;
@@ -50,23 +55,28 @@ public class AuthController {
         GithubUser githubUser = githubProvider.GetUser(token);
 
         if (githubUser != null && githubUser.getId() != null) {
-            User u_check = userMapper.findById(githubUser.getId());
-            if (u_check == null) {
-                User u_insert = new User();
-                u_insert.setAccount_id(githubUser.getId() + "");
-                u_insert.setName(githubUser.getLogin());
-                u_insert.setToken(UUID.randomUUID().toString());
-                u_insert.setGmt_create(System.currentTimeMillis());
-                u_insert.setGmt_modified(u_insert.getGmt_create());
-                u_insert.setBio(githubUser.getBio());
-                u_insert.setAvatar(githubUser.getAvatar_url());
-                userMapper.insert(u_insert);
-                request.getSession().setAttribute("CurrentUser", u_insert);
-                response.addCookie(new Cookie("token", u_insert.getToken()));
-            }else{
-                response.addCookie(new Cookie("token", u_check.getToken()));
-            }
+                User u = new User();
+                u.setAccount_id(githubUser.getId() + "");
+                u.setName(githubUser.getLogin());
+                u.setToken(UUID.randomUUID().toString());
+                u.setAvatar(githubUser.getAvatar_url());
+                userService.CreateOrUpdate(u);
+                request.getSession().setAttribute("CurrentUser", u);
+                response.addCookie(new Cookie("token", u.getToken()));
+
         }
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response,HttpSession session){
+        // 1. 清除session
+        session.removeAttribute("CurrentUser");
+        // 2.清除cookie
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(-1);
+        response.addCookie(cookie);
+
         return "redirect:/";
     }
 }

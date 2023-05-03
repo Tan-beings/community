@@ -4,6 +4,7 @@ import com.tanquandan.blogsystem.DAO.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper {
@@ -15,4 +16,7 @@ public interface UserMapper {
 
     @Select("select * from user where account_id = #{account_id}")
     User findById(String account_id);
+
+    @Update("update user set account_id = #{account_id},name=#{name},token=#{token},avatar=#{avatar}")
+    int update(User u_check);
 }

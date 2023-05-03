@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  <style>
+    body{
+      background: #efefef;
+    }
+    main{
+      padding:24px 64px;
+      border-radius: 10px;
+
+    }
+
+    .second-title{
+      margin:0;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .fourth-title{
+      font-weight: 600;
+    }
+
+    a:link,
+    a:visited{
+      text-decoration: none;
+      color:inherit;
+    }
+    a:hover{
+      color:#222;
+    }
+
+    .user-avatar{
+      width: 50px;
+    }
+
+    .question-content-info{
+      font-size: 12px;
+      color:#aaa;
+    }
+
+    .question-content-info,
+    .question-content-edit{
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      gap:12px;
+      color:#777;
+      padding: 0;
+      margin-bottom: 18px;
+    }
+
+    .content-show{
+      padding:12px 6px;
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      margin-bottom: 15px;
+
+      line-height: 1.5;
+      font-weight: 500;
+      font-size: 17px;
+
+    }
+
+    .question-content-edit{
+      font-size: 16px;
+      font-weight: 600;
+      color:#666;
+      float:right;
+    }
+
+    .question-content-edit-item:hover{
+      text-decoration: underline;
+    }
+
+    .author{
+      background: #fff;
+      padding:12px;
+      border-radius: 10px;
+    }
+
+  </style>
+  <title>Title</title>
+</head>
+<body>
+<nav th:insert="navigation :: nav"></nav>
+<main>
+  <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+    <nav>
+    <h2 th:text="${question.title}" class="second-title">标题</h2>
+    <ul class="question-content-info">
+      <li>作者：<span th:text="${question.user.name}" id="author">巴巴爸爸</span></li>
+      <li>发布时间：<span th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd HH:mm')}"  id="publishTime">19292</span></li>
+      <li>浏览人数：<span th:text="${question.view_count}"  id="view">22</span></li>
+    </ul>
+    </nav>
+    <div th:text="${question.description}" class="content-show">
+      三年前，公司开展拓展训练，地点定在青云山。
+
+      盘山公路上，司机驾驶得谨慎而缓慢，后方的山景在许小诺眼中逐渐模糊起来。她自小便有晕车的毛病，这次出门走得匆忙，忘记带晕车药，更何况现在是蜿蜒曲折的山路，上车没多久，难耐的反胃恶心便瞬间席卷了她。
+
+      大巴车的玻璃都是封闭的，唯有后排窗户能打开一条缝隙，许小诺起身走到最后排，跟一位同事换了下位置，坐下后才发现靠窗坐着一位陌生男人。
+    </div>
+    <ul th:if="${session.CurrentUser!=null && session.CurrentUser.account_id == question.user.account_id}" class="question-content-edit">
+      <li>
+        <a class="question-content-edit-item" href="#">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          <a th:href="@{'/toEdit/'+ ${question.id}}">编辑</a>
+        </a>
+      </li>
+      <li>
+        <a class="question-content-edit-item" href="#">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          删除
+        </a>
+      </li>
+      <li></li>
+    </ul>
+    </div>
+
+  <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+    <div class="author">
+      <div class="media">
+        <div class="media-left media-middle"><a href="#"><img class="media-object user-avatar" th:attr="src=${question.user.avatar}" alt="avatar"></a>
+        </div>
+        <div class="media-body"><h4 class="media-heading fourth-title"><a href="#" th:text="${question.user.name}">夏天的冰西瓜</a></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
