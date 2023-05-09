@@ -68,7 +68,15 @@
             -webkit-box-orient: vertical;
         }
     </style>
-    <title>Title</title>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if(localStorage.getItem("closable") === "true"){
+                window.close();
+                localStorage.removeItem("closable");
+            }
+        })
+    </script>
+    <title>南特师BBS</title>
 </head>
 <body>
 <nav th:insert="navigation :: nav"></nav>
@@ -100,9 +108,9 @@
                 <h4 class="media-heading fourth-title">
                     <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}">夏天的冰西瓜</a></h4>
                 <p class="question-content" th:text="${question.description}">...</p>
-                <span class="question-content-info"><span class="question-comment-count" th:text="${question.comment_count}">0</span>个评论</span>
-                <span class="question-content-info"><span class="question-view-count" th:text="${question.view_count}">729</span>次浏览</span>
-                <span class="question-content-info"><span class="question-view-count" th:text="${question.comment_count}">2 </span>天前</span>
+                <span class="question-content-info"><span class="question-comment-count" th:text="${question.commentCount}">0</span>个评论</span>
+                <span class="question-content-info"><span class="question-view-count" th:text="${question.viewCount}">729</span>次浏览</span>
+                <span class="question-content-info"><span class="question-view-count" th:text="${question.commentCount}">2 </span>天前</span>
             </div>
         </div></li>
 

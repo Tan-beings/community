@@ -1,7 +1,7 @@
 package com.tanquandan.blogsystem.Interceptor;
 
 import com.tanquandan.blogsystem.DAO.User;
-import com.tanquandan.blogsystem.Mapper.UserMapper;
+import com.tanquandan.blogsystem.Service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LocalInterceptor implements HandlerInterceptor {
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
 
     @Override
@@ -23,7 +23,7 @@ public class LocalInterceptor implements HandlerInterceptor {
         if(cookies != null) {
             for (Cookie e : cookies) {
                 if (e.getName().equals("token")) {
-                    User current_user = userMapper.findByToken(e.getValue());
+                    User current_user = userService.findByToken(e.getValue());
                     request.getSession().setAttribute("CurrentUser", current_user);
                     return true;
                 }

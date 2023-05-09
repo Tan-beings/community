@@ -3,9 +3,9 @@ package com.tanquandan.blogsystem.controller;
 import com.tanquandan.blogsystem.DAO.User;
 import com.tanquandan.blogsystem.DTO.AccessToken;
 import com.tanquandan.blogsystem.DTO.GithubUser;
-import com.tanquandan.blogsystem.Mapper.UserMapper;
 import com.tanquandan.blogsystem.Provider.GithubProvider;
 import com.tanquandan.blogsystem.Service.UserService;
+import com.tanquandan.blogsystem.mapper.UserMapper;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -56,7 +56,7 @@ public class AuthController {
 
         if (githubUser != null && githubUser.getId() != null) {
                 User u = new User();
-                u.setAccount_id(githubUser.getId() + "");
+                u.setAccountId(githubUser.getId() + "");
                 u.setName(githubUser.getLogin());
                 u.setToken(UUID.randomUUID().toString());
                 u.setAvatar(githubUser.getAvatar_url());

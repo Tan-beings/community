@@ -30,7 +30,7 @@ public class ProfileController {
             model.addAttribute("sectionName","我的问题");
         }
         User currentUser = (User)request.getSession().getAttribute("CurrentUser");
-        PaginationDTO paginationList = questionService.listQuestionsByUser(currentUser.getAccount_id(),offset,size);
+        PaginationDTO paginationList = questionService.listQuestionsByUser(currentUser.getAccountId(),offset,size);
         model.addAttribute("PaginationList",paginationList);
 
         return "profile";

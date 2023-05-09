@@ -1,144 +1,357 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-  <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/common.css">
 
-  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-  <style>
-    body{
-      background: #efefef;
-    }
-    main{
-      padding:24px 64px;
-      border-radius: 10px;
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
 
-    }
+    <link rel="stylesheet" href="../static/icons/iconfont.css">
+    <script src="../static/js/question.js"></script>
+    <style>
+        body {
+            background: #efefef;
+        }
 
-    .second-title{
-      margin:0;
-      margin-bottom: 20px;
-      font-size: 32px;
-    }
+        main {
+            padding: 24px 64px;
+            border-radius: 10px;
 
-    .fourth-title{
-      font-weight: 600;
-    }
+        }
 
-    a:link,
-    a:visited{
-      text-decoration: none;
-      color:inherit;
-    }
-    a:hover{
-      color:#222;
-    }
+        .second-title {
+            margin: 0;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
 
-    .user-avatar{
-      width: 50px;
-    }
+        .fourth-title {
+            font-weight: 600;
+        }
 
-    .question-content-info{
-      font-size: 12px;
-      color:#aaa;
-    }
+        a:link,
+        a:visited {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    .question-content-info,
-    .question-content-edit{
-      list-style: none;
-      display: flex;
-      flex-direction: row;
-      gap:12px;
-      color:#777;
-      padding: 0;
-      margin-bottom: 18px;
-    }
+        a:hover {
+            color: #222;
+        }
 
-    .content-show{
-      padding:12px 6px;
-      border-top: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      margin-bottom: 15px;
+        .user-avatar {
+            width: 50px;
+        }
 
-      line-height: 1.5;
-      font-weight: 500;
-      font-size: 17px;
+        .question-content-info {
+            font-size: 12px;
+            color: #aaa;
+        }
 
-    }
+        .question-content-info,
+        .question-content-edit {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            color: #777;
+            padding: 0;
+            margin-bottom: 18px;
+        }
 
-    .question-content-edit{
-      font-size: 16px;
-      font-weight: 600;
-      color:#666;
-      float:right;
-    }
+        .content-show {
+            padding: 12px 6px;
+            border-top: 1px solid #e6e6e6;;
+            margin-bottom: 15px;
 
-    .question-content-edit-item:hover{
-      text-decoration: underline;
-    }
+            line-height: 1.5;
+            font-weight: 500;
+            font-size: 17px;
 
-    .author{
-      background: #fff;
-      padding:12px;
-      border-radius: 10px;
-    }
+        }
 
-  </style>
-  <title>Title</title>
+        .question-content-edit {
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            float: right;
+        }
+
+        .question-content-edit-item:hover {
+            text-decoration: underline;
+        }
+
+        .author {
+            background: #fff;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .clear-both{
+            clear: both;
+            border-bottom: solid 1px #e6e6e6;
+        }
+
+    </style>
+    <title>Title</title>
 </head>
 <body>
 <nav th:insert="navigation :: nav"></nav>
 <main>
-  <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-    <nav>
-    <h2 th:text="${question.title}" class="second-title">标题</h2>
-    <ul class="question-content-info">
-      <li>作者：<span th:text="${question.user.name}" id="author">巴巴爸爸</span></li>
-      <li>发布时间：<span th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd HH:mm')}"  id="publishTime">19292</span></li>
-      <li>浏览人数：<span th:text="${question.view_count}"  id="view">22</span></li>
-    </ul>
-    </nav>
-    <div th:text="${question.description}" class="content-show">
-      三年前，公司开展拓展训练，地点定在青云山。
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="question-content">
+            <nav>
+                <h2 th:text="${question.title}" class="second-title">标题</h2>
+                <ul class="question-content-info">
+                    <li>作者：<span th:text="${question.user.name}" id="author">巴巴爸爸</span></li>
+                    <li>发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}" id="publishTime">19292</span>
+                    </li>
+                    <li>浏览人数：<span th:text="${question.viewCount}" id="view">22</span></li>
+                </ul>
+            </nav>
+            <div th:text="${question.description}" class="content-show">
+                三年前，公司开展拓展训练，地点定在青云山。
 
-      盘山公路上，司机驾驶得谨慎而缓慢，后方的山景在许小诺眼中逐渐模糊起来。她自小便有晕车的毛病，这次出门走得匆忙，忘记带晕车药，更何况现在是蜿蜒曲折的山路，上车没多久，难耐的反胃恶心便瞬间席卷了她。
+                盘山公路上，司机驾驶得谨慎而缓慢，后方的山景在许小诺眼中逐渐模糊起来。她自小便有晕车的毛病，这次出门走得匆忙，忘记带晕车药，更何况现在是蜿蜒曲折的山路，上车没多久，难耐的反胃恶心便瞬间席卷了她。
 
-      大巴车的玻璃都是封闭的，唯有后排窗户能打开一条缝隙，许小诺起身走到最后排，跟一位同事换了下位置，坐下后才发现靠窗坐着一位陌生男人。
-    </div>
-    <ul th:if="${session.CurrentUser!=null && session.CurrentUser.account_id == question.user.account_id}" class="question-content-edit">
-      <li>
-        <a class="question-content-edit-item" href="#">
-          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          <a th:href="@{'/toEdit/'+ ${question.id}}">编辑</a>
-        </a>
-      </li>
-      <li>
-        <a class="question-content-edit-item" href="#">
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          删除
-        </a>
-      </li>
-      <li></li>
-    </ul>
-    </div>
-
-  <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-    <div class="author">
-      <div class="media">
-        <div class="media-left media-middle"><a href="#"><img class="media-object user-avatar" th:attr="src=${question.user.avatar}" alt="avatar"></a>
+                大巴车的玻璃都是封闭的，唯有后排窗户能打开一条缝隙，许小诺起身走到最后排，跟一位同事换了下位置，坐下后才发现靠窗坐着一位陌生男人。
+            </div>
+            <ul th:if="${session.CurrentUser!=null && session.CurrentUser.accountId == question.user.accountId}"
+                class="question-content-edit">
+                <li>
+                    <a class="question-content-edit-item" href="#">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        <a th:href="@{'/toEdit/'+ ${question.id}}">编辑</a>
+                    </a>
+                </li>
+                <li>
+                    <a class="question-content-edit-item" href="#">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        删除
+                    </a>
+                </li>
+                <li></li>
+            </ul>
         </div>
-        <div class="media-body"><h4 class="media-heading fourth-title"><a href="#" th:text="${question.user.name}">夏天的冰西瓜</a></h4>
+        <div class="clear-both">
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="aw-mod aw-question-comment">
+            <div class="mod-head">
+                <ul class="nav nav-tabs aw-nav-tabs active">
+                    <li><a href="https://elasticsearch.cn/question/13049?uid=focus">关注的人</a></li>
+                    <li><a href="https://elasticsearch.cn/question/13049?sort_key=add_time&amp;sort=ASC">时间 <i
+                            class="icon icon-up"></i></a></li>
+                    <li class="active"><a
+                            href="https://elasticsearch.cn/question/13049&amp;sort_key=agree_count&amp;sort=DESC">票数</a>
+                    </li>
 
+                    <h2 class="hidden-xs">2 个回复</h2>
+                </ul>
+            </div>
+            <div class="mod-body aw-feed-list">
+                <div class="aw-item" uninterested_count="0" force_fold="0" id="answer_list_17490">
+                    <div class="mod-head">
+                        <a class="anchor" name="answer_17490"></a>
+                        <!-- 用户头像 -->
+                        <a class="aw-user-img aw-border-radius-5" href="https://elasticsearch.cn/people/Charele"
+                           data-id="12694"><img
+                                src="https://elasticsearch.cn/uploads/avatar/000/01/26/94_avatar_mid.jpg" alt=""
+                                data-bd-imgshare-binded="1"></a>
+                        <!-- end 用户头像 -->
+                        <div class="title">
+                            <p>
+                                <a class="aw-user-name" href="https://elasticsearch.cn/people/Charele" data-id="12694">Charele</a>
+                                - <span class="text-color-999">Cisco4321</span></p>
+                            <p class="text-color-999 aw-agree-by hide">
+                                赞同来自:
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mod-body clearfix">
+                        <!-- 评论内容 -->
+                        <div class="markitup-box">
+                            ES里没有list或数组这种类型，<br>
+                            你这个allNames我想应该是text(keyword)类型的，<br>
+                            &nbsp;<br>
+                            比如你用 name : ["aaa",&nbsp; "bbb"]这种形式插入数据，<br>
+                            其实和用name : "aaa bbb"这种的效果是一样的（分词后）<br>
+                            &nbsp;<br>
+                            之所以你会在search时看到这种形式，那只是在"_source"这个字段里保存了插入时的原始内容
+                        </div>
+
+
+                        <!-- end 评论内容 -->
+                    </div>
+                    <div class="mod-footer">
+                        <!-- 社交操作 -->
+                        <div class="meta clearfix">
+                            <span class="text-color-999 pull-right">2023-04-22</span>
+                            <!-- 投票栏 -->
+                            <span class="operate">
+                <a class="agree  " onclick="AWS.User.agree_vote(this, 'tan_beings', 17490);">
+                  <i data-placement="right" title="" data-toggle="tooltip" class="iconfont icon-good"
+                     data-original-title="赞同回复"></i> <b class="count">0</b>
+                </a>
+                <a class="disagree " onclick="AWS.User.disagree_vote(this, 'tan_beings', 17490)">
+                  <i data-placement="right" title="" data-toggle="tooltip" class="iconfont icon-bad"
+                     data-original-title="对回复持反对意见"></i>
+                </a>
+              </span>
+                            <!-- end 投票栏 -->
+                            <span class="operate">
+                <a class="aw-add-comment" data-id="17490" data-type="answer" data-comment-count="1" data-first-click=""
+                   href="javascript:;">
+                  <i class="iconfont icon-message-comments"></i>
+                  0
+                </a>
+              </span>
+                            <!-- 可显示/隐藏的操作box -->
+                            <div class="more-operate">
+                                <a class="aw-icon-thank-tips text-color-999" data-original-title="这是一个没有价值的回复"
+                                   data-toggle="tooltip" title="" data-placement="bottom"
+                                   onclick="AWS.User.answer_user_rate($(this), 'uninterested', 17490);"><i
+                                        class="icon icon-fold"></i>没有帮助</a>
+
+                                <a href="javascript:;"
+                                   onclick="AWS.dialog('favorite', {item_id:17490, item_type:'answer'});"
+                                   class="text-color-999"><i class="icon icon-favor"></i> 收藏</a>
+
+                                <a href="javascript:;" onclick="AWS.User.answer_user_rate($(this), 'thanks', 17490);"
+                                   class="aw-icon-thank-tips text-color-999" data-original-title="感谢热心的回复者"
+                                   data-toggle="tooltip" title="" data-placement="bottom"><i
+                                        class="icon icon-thank"></i> 感谢</a>
+                                <div class="btn-group pull-left">
+                                    <a class="text-color-999 dropdown-toggle" data-toggle="dropdown">
+                                        <i class="iconfont icon-share"></i> 分享 </a>
+                                    <div aria-labelledby="dropdownMenu" role="menu"
+                                         class="aw-dropdown shareout pull-right">
+                                        <ul class="aw-dropdown-list">
+                                            <li>
+                                                <a onclick="AWS.User.share_out({webid: 'tsina', title: $(this).parents('.aw-item').find('.markitup-box').text()});"><i
+                                                        class="icon icon-weibo"></i> 微博</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 可显示/隐藏的操作box -->
+
+                        </div>
+                        <!-- end 社交操作 -->
+                        <div class="aw-comment-box" id="aw-comment-box-answer-17490" style="display: none;">
+                            <div class="aw-comment-list">
+                                <ul>
+                                    <li>
+                                        <a class="aw-user-name" href="https://elasticsearch.cn/people/a1667499668"
+                                           data-id="18896"><img th:src="${question.user.avatar}" alt=""></a>
+                                        <div>
+                                            <p class="clearfix">
+                      <span class="pull-right">
+                          <a href="javascript:;"
+                             onclick="if ($(this).parents('.aw-comment-box').find('form textarea').val() == $(this).parents('.aw-comment-box').find('form textarea').attr('placeholder')){$(this).parents('.aw-comment-box').find('form textarea').val('');};$(this).parents('.aw-comment-box').find('form').show().find('textarea').focus();$(this).parents('.aw-comment-box').find('form textarea').insertAtCaret('@a1667499668:');$.scrollTo($(this).parents('.aw-comment-box').find('form'), 300, {queue:true});$(this).parents('.aw-comment-box').find('textarea').focus();">回复</a>
+                      </span>
+                                                <a href="https://elasticsearch.cn/people/a1667499668"
+                                                   class="aw-user-name author" data-id="18896">a1667499668</a>
+                                                • <span>2023-04-25 16:35</span>
+                                            </p>
+                                            <p class="clearfix">那取得时候只能是获取出字符串了吗</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <form action="https://elasticsearch.cn/question/ajax/save_answer_comment/answer_id-17490"
+                                  method="post" onsubmit="return false">
+                                <div class="aw-comment-box-main"><textarea class="aw-comment-txt form-control" rows="2"
+                                                                           name="message" placeholder="评论一下..."
+                                                                           style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 33.3333px;"></textarea>
+                                    <div class="aw-comment-box-btn"><span class="pull-right"><a href="javascript:;"
+                                                                                                class="btn btn-mini btn-success"
+                                                                                                onclick="AWS.User.save_comment($(this));">评论</a><a
+                                            href="javascript:;"
+                                            class="btn btn-mini btn-gray close-comment-box">取消</a></span></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mod-footer">
+                <div class="aw-load-more-content hide" id="load_uninterested_answers">
+                    <span class="text-color-999 aw-alert-box text-color-999" href="javascript:;" tabindex="-1"
+                          onclick="AWS.alert('被折叠的回复是被你或者被大多数用户认为没有帮助的回复');">为什么被折叠?</span>
+                    <a href="javascript:;" class="aw-load-more-content"><span class="hide_answers_count">0</span> 个回复被折叠</a>
+                </div>
+
+                <div class="hide aw-feed-list" id="uninterested_answers_list"></div>
+            </div>
+
+        </div>
+
+        <!-- 文章评论
+        <div th:if="${comments.size() == 0}"   class="aw-mod">
+          <div class="mod-head common-head">
+            <h2>0 个评论</h2>
+          </div>
+          <div class="mod-body aw-feed-list">
+          </div>
+           -->
+
+        <!-- 回复编辑器 -->
+        <div class="aw-mod aw-article-replay-box">
+            <a id="commentsSection"></a>
+            <a name="answer_form"></a>
+            <form action="" onsubmit="return false;" method="post" id="answer_form">
+                <input type="hidden" name="post_hash" value="af73af31a90e597f">
+                <input type="hidden" name="question_id" th:value="${question.id}">
+                <div class="mod-head">
+                    <a href="#" class="aw-user-name"><img alt="tan_beings"
+                                                          src="https://www.gravatar.com/avatar/eb1c4e56dc34ac1b8c53e8e98f91c0b7?d=identicon&amp;s=50"
+                                                          data-bd-imgshare-binded="1"></a>
+                </div>
+                <div class="mod-body">
+                    <textarea rows="3" name="comment_content" id="comment_editor" class="form-control autosize"
+                              placeholder="写下你的评论..."
+                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 91px;"></textarea>
+                </div>
+                <div class="mod-footer clearfix">
+                    <a href="javascript:;" onclick="post();"
+                       class="btn btn-normal btn-success pull-right btn-submit btn-reply">回复</a>
+                </div>
+            </form>
+        </div>
+        <!-- end 回复编辑器 -->
+    </div>
+    <!-- end 文章评论 -->
+
+
+    </div>
+
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="author">
+            <div class="media">
+                <div class="media-left media-middle"><a href="#"><img class="media-object user-avatar"
+                                                                      th:attr="src=${question.user.avatar}"
+                                                                      alt="avatar"></a>
+
+                    <div class="media-body"><h4 class="media-heading fourth-title"><a href="#"
+                                                                                      th:text="${question.user.name}">夏天的冰西瓜</a>
+                    </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

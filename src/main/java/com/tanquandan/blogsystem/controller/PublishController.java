@@ -1,22 +1,17 @@
 package com.tanquandan.blogsystem.controller;
 
-import com.tanquandan.blogsystem.DAO.User;
 import com.tanquandan.blogsystem.DAO.Question;
-import com.tanquandan.blogsystem.Mapper.QuestionMapper;
-import com.tanquandan.blogsystem.Mapper.UserMapper;
-import jakarta.servlet.http.Cookie;
+import com.tanquandan.blogsystem.DAO.User;
+import com.tanquandan.blogsystem.mapper.QuestionMapper;
+import com.tanquandan.blogsystem.mapper.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Arrays;
 
 @Controller
 public class PublishController {
@@ -62,9 +57,12 @@ public class PublishController {
         q.setTitle(title);
         q.setDescription(description);
         q.setTag(tag);
-        q.setGmt_create(System.currentTimeMillis());
-        q.setGmt_modified(q.getGmt_create());
-        q.setCreator(((User)session.getAttribute("CurrentUser")).getAccount_id());
+        q.setGmtCreate(System.currentTimeMillis());
+        q.setGmtModified(q.getGmtCreate());
+        q.setCreator(((User)session.getAttribute("CurrentUser")).getAccountId());
+        q.setViewCount(0);
+        q.setCommentCount(0);
+        q.setLikeCount(0);
         int insert = questionMapper.insert(q);
         return "redirect:/";
     }

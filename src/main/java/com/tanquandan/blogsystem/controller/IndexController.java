@@ -1,10 +1,8 @@
 package com.tanquandan.blogsystem.controller;
 
-import com.tanquandan.blogsystem.DAO.User;
 import com.tanquandan.blogsystem.DTO.PaginationDTO;
-import com.tanquandan.blogsystem.Mapper.UserMapper;
 import com.tanquandan.blogsystem.Service.QuestionService;
-import jakarta.servlet.http.Cookie;
+import com.tanquandan.blogsystem.mapper.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +23,14 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpSession session,
-                        HttpServletRequest request, Model model,
+                        Model model,
                         @RequestParam(name="startNumber",defaultValue= "1")int offset,
                         @RequestParam(name="size",defaultValue = "5")int size){
 
         PaginationDTO PaginationList = questionService.listAllQuestions(offset, size);
-        System.out.println(PaginationList);
+        System.out.println(PaginationList.getQuestions());
         model.addAttribute("PaginationList",PaginationList);
+        System.out.println("1: "+session.getAttribute("CurrentUser"));
         return "index";
     }
 }

@@ -1,0 +1,44 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "34452882",
+      "name": "message-comments",
+      "font_class": "message-comments",
+      "unicode": "e82e",
+      "unicode_decimal": 59438
+    },
+    {
+      "icon_id": "34452964",
+      "name": "bad",
+      "font_class": "bad",
+      "unicode": "e838",
+      "unicode_decimal": 59448
+    },
+    {
+      "icon_id": "34452979",
+      "name": "favorites-fill",
+      "font_class": "favorites-fill",
+      "unicode": "e839",
+      "unicode_decimal": 59449
+    },
+    {
+      "icon_id": "34453002",
+      "name": "good",
+      "font_class": "good",
+      "unicode": "e83c",
+      "unicode_decimal": 59452
+    },
+    {
+      "icon_id": "34453056",
+      "name": "share",
+      "font_class": "share",
+      "unicode": "e841",
+      "unicode_decimal": 59457
+    }
+  ]
+}
