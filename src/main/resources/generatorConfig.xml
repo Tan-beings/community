@@ -16,9 +16,13 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.tanquandan.blogsystem.mapper" targetProject="src/main/java"/>
 
-        <table tableName="question"  />
-        <table tableName="comment"/>
-        <table tableName="user" />
+        <table tableName="question">
+            <generatedKey identity="true" type="post" column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="comment"><generatedKey identity="true" type="post" column="id" sqlStatement="Mysql"/></table>
+        <table tableName="user" ><generatedKey identity="true" type="post" column="id" sqlStatement="Mysql"/></table>
+        <table tableName="tag" ><generatedKey identity="true" type="post" column="id" sqlStatement="Mysql"/></table>
+        <table tableName="notification" ><generatedKey identity="true" type="post" column="id" sqlStatement="Mysql"/></table>
     </context>
 
 

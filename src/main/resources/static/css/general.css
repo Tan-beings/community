@@ -1,0 +1,33 @@
+body {
+    background: #efefef;
+}
+
+main {
+    padding: 6px 64px 32px 64px;
+    border-radius: 10px;
+
+}
+
+.second-title {
+    margin-bottom: 16px;
+    line-height: 1.2;
+    font-size: 32px;
+}
+
+.fourth-title {
+    font-weight: 600;
+}
+
+.iconfont{
+    cursor:pointer;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #222;
+}

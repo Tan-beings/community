@@ -1,19 +1,22 @@
 package com.tanquandan.blogsystem.controller;
 
+import com.tanquandan.blogsystem.DAO.Question;
+import com.tanquandan.blogsystem.DAO.Tag;
 import com.tanquandan.blogsystem.DTO.CommentDTO;
 import com.tanquandan.blogsystem.DTO.QuestionDTO;
+import com.tanquandan.blogsystem.DTO.RequestDTO;
 import com.tanquandan.blogsystem.Service.CommentService;
 import com.tanquandan.blogsystem.Service.QuestionService;
+import com.tanquandan.blogsystem.Service.TagService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class QuestionController {
@@ -21,10 +24,12 @@ public class QuestionController {
     QuestionService questionService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    TagService tagService;
 
     @GetMapping("/question/{id}")
     public String toQuestion(@PathVariable(name="id")int id,
-                             Model model, HttpSession session){
+                             Model model){
         QuestionDTO question = questionService.queryQuestionById(id);
         List<CommentDTO> comments = commentService.queryCommentDTOsByQuestionId(id);
         model.addAttribute("comments",comments);
@@ -38,13 +43,16 @@ public class QuestionController {
     public String toEdit(@PathVariable(name="id")int id,
                          Model model){
         QuestionDTO question = questionService.queryQuestionById(id);
+        List<Integer> tagIds = tagService.queryTagsByQuestionId(id).stream().map(Tag::getId).collect(Collectors.toList());
         model.addAttribute("question_id",id);
         model.addAttribute("question_title",question.getTitle());
         model.addAttribute("question_description",question.getDescription());
-        model.addAttribute("question_tag",question.getTag());
+        model.addAttribute("question_tag",tagIds);
+        model.addAttribute("tags",tagService.queryAllTags());
 
         return "edit";
     }
+
 
     @PostMapping("/doEdit/{id}")
     public String doEdit(@PathVariable(name="id")int questionId,
@@ -59,8 +67,26 @@ public class QuestionController {
             model.addAttribute("error","修改失败：出现了未知异常");
             return "/toEdit/"+questionId;
         }
-
         return "redirect:/";
-
     }
+
+
+
+    @ResponseBody
+    @GetMapping("/getAuthorQuestions/{accountId}")
+    public RequestDTO<List<QuestionDTO>> getAuthorQuestion(@PathVariable(name="accountId")String accountId){
+        List<QuestionDTO> questionDTOS = questionService.listQuestionByAuthorAccountId(accountId);
+        return new RequestDTO<>(200,questionDTOS);
+    }
+
+
+    @ResponseBody
+    @GetMapping("/getRelatedQuestions/{questionId}/{tags}")
+    public RequestDTO<List<QuestionDTO>> getRelatedQuestion(@PathVariable(name="questionId")long questionId,@PathVariable(name="tags")String tags){
+        List<QuestionDTO> questionDTOS = questionService.queryRelatedQuestions(questionId,tags);
+        return new RequestDTO<>(200,questionDTOS);
+    }
+
+
+
 }

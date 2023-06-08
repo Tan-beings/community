@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PaginationDTO {
-    private List<QuestionDTO> questions;
+public class PaginationDTO<T> {
+    private List<T> objects;
     private int currentPage;
     private int pageSize;
     private int pageNumberListLength = 5;
-    private int totalItems;
+    private long totalItems;
     private boolean showPrevious;
     private boolean showNext;
  
     private List<Integer> pageNumberList;
 
-    public PaginationDTO(List<QuestionDTO> questions,int currentPage,int pageSize,int totalItems){
-        this.questions = questions;
+    public PaginationDTO(List<T> objects,int currentPage,int pageSize,long totalItems){
+        this.objects = objects;
         this.pageSize = pageSize;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
@@ -26,7 +26,7 @@ public class PaginationDTO {
 
     public void setPagination(){
         this.pageNumberList = new ArrayList<>();
-        int endPageNumber =this.totalItems/this.pageSize+(this.totalItems%this.pageSize>0?1:0);
+        int endPageNumber = (int) (this.totalItems/this.pageSize+(this.totalItems%this.pageSize>0?1:0));
         int startPageNumber = 1;
 
         // 1. 确定显示列表

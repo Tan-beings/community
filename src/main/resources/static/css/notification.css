@@ -1,0 +1,22 @@
+.notification-link{
+    cursor: pointer;
+}
+.notification-item{
+    position: relative;
+    padding:0 18px 0 0;
+}
+
+.notification-read-flag{
+    position: absolute;
+    padding:2px 6px;
+
+    color:#fff;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    border-radius: 2px;
+    right:-20px;
+    top:-10px;
+
+    background-color: rgba(193, 35, 35, 0.93);
+
+}

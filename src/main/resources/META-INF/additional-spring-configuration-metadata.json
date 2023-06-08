@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "aliyun.ufile.accessKeySecret",
+      "type": "java.lang.String",
+      "description": "Description for aliyun.ufile.accessKeySecret."
+  }
+] }

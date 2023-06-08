@@ -9,9 +9,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestDTO {
+public class RequestDTO<T> {
     public int code;
     public String message;
+    public T data;
+
+
+    public RequestDTO(int code,T data){
+        this.code = code;
+        this.data = data;
+    }
+
+    public RequestDTO(int code,String message){
+        this.code = code;
+        this.message = message;
+    }
+
 
     public static RequestDTO errorOf(int code,String message){
         RequestDTO requestDTO = new RequestDTO();

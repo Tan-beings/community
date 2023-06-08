@@ -1,0 +1,151 @@
+.user-avatar {
+    width: 50px;
+}
+
+#author-name{
+    font-size: 16px;
+    font-weight: 600;
+    color:#444;
+}
+
+.question-content-info {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.question-tags-list-box,
+.question-content-info-author,
+.question-content-edit,
+.question-tags-list{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.question-tags-list-box,
+.question-content-info-author,
+.question-content-edit {
+    gap: 12px;
+}
+.question-tags-list{
+    gap:6px;
+}
+
+
+.question-content-info-tags .questions-tag{
+    padding:4px;
+}
+
+.content-show {
+    padding: 12px 6px;
+    border-top: 1px solid #e6e6e6;;
+    margin-bottom: 15px;
+
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 17px;
+
+}
+
+.question-content-edit {
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    float: right;
+}
+
+.question-content-edit-item:hover {
+    text-decoration: underline;
+}
+
+.question-content-info{
+    font-size: 12px;
+    color:#aaa;
+}
+
+.question-content {
+    /*溢出部分隐藏起来*/
+    overflow: hidden;
+    /*文本溢出时用省略号来显示*/
+    text-overflow: ellipsis;
+    /*弹性伸缩盒子模型显示*/
+    display: -webkit-box;
+    /*限制在一个块元素显示文本的行数*/
+    -webkit-line-clamp: 2; /*2行*/
+    /*设置或检索伸缩盒对象子元素的排列方式*/
+    -webkit-box-orient: vertical;
+}
+
+
+.side-bar{
+    background: #fff;
+    padding: 12px;
+    margin-bottom: 32px;
+    border-radius: 10px;
+}
+
+.author-info{
+    display: flex;
+    gap: 10px;
+
+    padding-bottom:12px;
+}
+
+.author-info-box{
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+    align-items: baseline;
+}
+
+
+.side-bar-title{
+    cursor: pointer;
+
+    line-height: 1.6;
+    font-size: 18px;
+    font-weight: 600;
+    color:#666;
+    padding:0 12px;
+
+    border-left:1px solid #efefef;
+}
+
+.author-questions-list{
+    display:none;
+}
+
+.open{
+    display: block;
+}
+
+.author-questions-list li,.recommend-questions-list li{
+    border:none;
+}
+
+.author-questions-list li:hover,
+.recommend-questions-list li:hover{
+    text-decoration: underline;
+}
+
+.author-info-name{
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.author-info-other{
+    font-size: 12px;
+    color:#aaa;
+
+}
+
+.comment-box-hidden{
+    display: none;
+}
+.clear-both{
+    clear: both;
+    border-bottom: solid 1px #e6e6e6;
+}
+
+

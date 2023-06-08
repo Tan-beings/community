@@ -1,7 +1,10 @@
 package com.tanquandan.blogsystem.DTO;
 
+import com.tanquandan.blogsystem.DAO.Tag;
 import com.tanquandan.blogsystem.DAO.User;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class QuestionDTO {
@@ -21,7 +24,7 @@ public class QuestionDTO {
 
     private Integer likeCount;
 
-    private String tag;
+    private List<Tag> tag;
 
     private String description;
 

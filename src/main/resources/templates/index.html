@@ -11,63 +11,8 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <style>
-        body{
-            background: #efefef;
-        }
-        main{
-            padding:24px 64px;
-            border-radius: 10px;
-
-        }
-        .second-title{
-            margin:0;
-            margin-bottom: 20px;
-        }
-
-        .fourth-title{
-            font-weight: 600;
-        }
-        .question-content{
-            padding:1px;
-        }
-
-        a:link,
-        a:visited{
-            text-decoration: none;
-            color:inherit;
-        }
-        a:hover{
-            color:#222;
-        }
-
-        .nav-tabs{
-          margin-bottom: 10px;
-            border:none;
-        }
-
-        .user-avatar{
-            width: 50px;
-        }
-
-        .question-content-info{
-            font-size: 12px;
-            color:#aaa;
-        }
-
-        .question-content{
-            /*溢出部分隐藏起来*/
-            overflow: hidden;
-            /*文本溢出时用省略号来显示*/
-            text-overflow: ellipsis;
-            /*弹性伸缩盒子模型显示*/
-            display: -webkit-box;
-            /*限制在一个块元素显示文本的行数*/
-            -webkit-line-clamp: 2;/*2行*/
-            /*设置或检索伸缩盒对象子元素的排列方式*/
-            -webkit-box-orient: vertical;
-        }
-    </style>
+    <link href="../static/css/question.css" rel="stylesheet">
+    <link href="../static/css/general.css" rel="stylesheet">
     <script type="text/javascript">
         $(document).ready(function(){
             if(localStorage.getItem("closable") === "true"){
@@ -97,7 +42,7 @@
     </ul>
     </div>
     <ul class="list-group">
-        <li class="list-group-item" th:each="question:${PaginationList.questions}"
+        <li class="list-group-item" th:each="question:${PaginationList.objects}"
         ><div class="media">
             <div class="media-left media-middle">
                 <a th:href="@{'/question/'+${question.id}}">
@@ -129,8 +74,6 @@
             </li>
             <li><a th:href="'/?startNumber='+${PaginationList.currentPage+1}" aria-label="Next" th:if="${PaginationList.showNext}"><span aria-hidden="true">&raquo;</span></a>
         </ul>
-
-        </a>
     </div>
     </div>
     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -138,7 +81,7 @@
             <h2 class="second-title">
                 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
 
-                <a href="/index">最新发布</a>
+                <a href="/">最新发布</a>
             </h2>
         </nav>
         常用链接

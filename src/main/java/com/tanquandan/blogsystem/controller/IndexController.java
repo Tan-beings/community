@@ -1,6 +1,7 @@
 package com.tanquandan.blogsystem.controller;
 
 import com.tanquandan.blogsystem.DTO.PaginationDTO;
+import com.tanquandan.blogsystem.DTO.QuestionDTO;
 import com.tanquandan.blogsystem.Service.QuestionService;
 import com.tanquandan.blogsystem.mapper.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,10 +28,8 @@ public class IndexController {
                         @RequestParam(name="startNumber",defaultValue= "1")int offset,
                         @RequestParam(name="size",defaultValue = "5")int size){
 
-        PaginationDTO PaginationList = questionService.listAllQuestions(offset, size);
-        System.out.println(PaginationList.getQuestions());
+        PaginationDTO<QuestionDTO> PaginationList = questionService.listAllQuestions(offset, size);
         model.addAttribute("PaginationList",PaginationList);
-        System.out.println("1: "+session.getAttribute("CurrentUser"));
         return "index";
     }
 }

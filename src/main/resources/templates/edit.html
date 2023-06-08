@@ -8,65 +8,18 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <title>Title</title>
-    <style>
-        body{
-            background: #efefef;
-        }
-        main{
-            padding:24px 64px;
-            border-radius: 10px;
-        }
-        .input-title{
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1;
-            color: #555;
-            text-align: center;
-            background-color: #eee;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-
-        }
-
-        .input-groups{
-            display: flex;
-            flex-direction: column;
-            gap:24px;
-            justify-items: center;
-        }
-
-        .publish-edit-panel{
-            padding-bottom:24px;
-            border-bottom: #fff 1px solid;
-        }
-
-        #question-submit{
-            align-self: flex-end;
-        }
-
-        .second-title{
-            margin:0;
-            margin-bottom: 20px;
-        }
-
-        a:link,
-        a:visited{
-            text-decoration: none;
-            color:inherit;
-        }
-        a:hover{
-            color:#222;
-        }
-
-        .hidden{
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="../static/css/publish.css">
+    <link rel="stylesheet" href="../static/css/general.css">
+    <link rel="stylesheet" href="../static/css/SelectTag.css">
+    <link rel="stylesheet" href="../static/editor/codemirror.min.css">
+    <link rel="stylesheet" href="../static/editor/matchesonscrollbar.css">
+    <link rel="stylesheet" href="../static/editor/dialog.css">
+    <link rel="stylesheet" href="../static/editor/editormd.css" />
+    <title>Edit</title>
 </head>
 <body>
 <nav th:insert="navigation :: nav"></nav>
@@ -83,13 +36,47 @@
                 <span class="input-group-addon" id="basic-addon1">标题</span>
                 <input type="text" class="form-control" id = "title" name="question_title" placeholder="概括你的问题" th:value="${question_title}" aria-describedby="basic-addon1">
             </div>
+            <input type="hidden" name="question_id" th:value="${question_id}"/>
             <div class="input-group">
                 <span class="input-title">问题描述</span>
-                <textarea class="form-control" rows="10" id="description" name="question_description" placeholder="请输入你的问题" th:text="${question_description}" aria-describedby="basic-addon1"></textarea>
+                <div id="editor">
+                    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+                    <textarea style="display:none;" name="question_description"  id="description" th:text="${question_description}">### Hello Editor.md !</textarea>
+                </div>
             </div>
-            <div class="input-group">
-                <span class="input-group-addon">标签</span>
-                <input type="text" class="form-control" id="tag" name="question_tag" th:value="${question_tag}" placeholder="输入标签,分隔符：‘，’"/>
+            <script src="../static/editor/editormd.js"></script>
+            <script type="text/javascript">
+                $(function() {
+                    var editor = editormd("editor", {
+                        width: "100%",
+                        height: 540,
+                        emoji:true,
+                        path : "/static/editor/"  // Autoload modules mode, codemirror, marked... dependents libs path
+                    });
+                });
+            </script>
+
+            <div class="tags-group" >
+                <div>
+                    <ul class="tags-displayed" style="padding-left: 0px;">
+                        <li class="tags-displayed-span">标签</li>
+                    </ul>
+                </div>
+                <input type="hidden" class="form-control" id="tag" th:value="${question_tag}" name="question_tag" />
+                <div class="tags-selected">
+                    <button class="btn btn-primary show-select-tags" type="button">
+                        选择标签
+                    </button>
+                    <button class="btn btn-primary hide-select-tags" type="button">
+                        选择完毕
+                    </button>
+
+                    <div class="tags-selected-box">
+                        <div class="tag-selected-list">
+                            <span th:each="tag:${tags}" class="tag-selected-item" th:attr="data-id=${tag.id}" th:text="${tag.name}">Node.js</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <input type="hidden" name="id" th:value="${question_id}">
             <button type="submit" id="question-submit" class="btn btn-default">Submit</button>
@@ -110,35 +97,24 @@
 </main>
 
 </body>
+<script src="../static/js/SelectTag.js"></script>
+<script src="../static/js/edit.js"></script>
+<script th:inline="javascript">
+    const tags = [[${tags}]];
+    const selectedTagIds = [[${question_tag}]];
+    selectedTagIds.forEach(tagId => {
+        console.log(tagId);
+        const selectedTag = tags.find(tag => {
+            if(tag.id===tagId){
+                return tag;
+            }});
+        const li = $(`<li class="tag-displayed-item" data-id="${tagId}">${selectedTag.name}</li>`);
+        tagsDisplayedPanel.append(li);
+        tagsSelectPanel.find(`div span[data-id=${tagId}]`).addClass("selected");
+        tagIds.push(tagId);
+    })
+    inputTagIdsSelected.val(tagIds.join(","));
 
-<script type="text/javascript">
-    const alert = $(".alert-input");
-    const titleInput = $("#title");
-    const descriptionInput = $("#description");
-    const tagInput = $("#tag");
-    function checkValidData(){
-        console.log(titleInput.val());
-        console.log(descriptionInput.val());
-        console.log(tagInput.val());
-        if(titleInput.val() == null || titleInput.val().trim() === ""){
-            alert.html("标题输入不能为空");
-            alert.removeClass("hidden");
-            console.log("我进来了1");
-            return false;
-        }
-        if(descriptionInput.val() == null || descriptionInput.val().trim() === ""){
-            alert.html("内容输入不能为空");
-            alert.removeClass("hidden");
-            console.log("我进来了2");
-            return false;
-        }
-        if(tagInput.val() == null || tagInput.val().trim() === ""){
-            alert.html("标签输入不能为空");
-            alert.removeClass("hidden");
-            console.log("我进来了3");
-            return false
-        }
-        return true;
-    }
 </script>
+
 </html>
