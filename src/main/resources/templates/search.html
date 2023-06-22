@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="../static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link href="../static/css/question.css" rel="stylesheet">
+    <link href="../static/css/general.css" rel="stylesheet">
+    <link href="../static/css/search.css" rel="stylesheet">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if(localStorage.getItem("closable") === "true"){
+                window.close();
+                localStorage.removeItem("closable");
+            }
+        })
+    </script>
+    <title>南特师BBS</title>
+</head>
+<body>
+<nav th:insert="navigation :: nav"></nav>
+<main>
+    <div class="publish-edit-panel col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <nav>
+            <h2 class="second-title">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <a href="/index">发现</a>
+            </h2>
+        </nav>
+        <div class="main-pages">
+            <div class="nav-tabs show-choice-panel">
+                <ul class="nav nav-pills show-choice">
+                    <li role="presentation" class="active"><a href="#">全部</a></li>
+                    <li role="presentation" th:each="tag:${tags}" ><a href="#" th:attr="data-id=${tag.id}" th:href="@{'getAllRelatedQuestions/'+${tag.id}}" th:text="${tag.name}">Profile</a></li>
+
+                </ul>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="question:${PaginationList.objects}"
+                ><div class="media">
+                    <div class="media-left media-middle">
+                        <a th:href="@{'/question/'+${question.id}}">
+                            <img class="media-object user-avatar" th:attr="src=${question.user.avatar}" alt="avatar">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading fourth-title">
+                            <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}">夏天的冰西瓜</a></h4>
+                        <p class="question-content" th:text="${question.description}">...</p>
+                        <span class="question-content-info"><span class="question-comment-count" th:text="${question.commentCount}">0</span>个评论</span>
+                        <span class="question-content-info"><span class="question-view-count" th:text="${question.viewCount}">729</span>次浏览</span>
+                        <span class="question-content-info"><span class="question-view-count" th:text="${question.commentCount}">2 </span>天前</span>
+                    </div>
+                </div></li>
+
+            </ul>
+        </div>
+        <div aria-label="..."  >
+            <ul class="pagination" >
+                <li>
+                    <a th:href="'/?startNumber='+${PaginationList.currentPage+1}" aria-label="Previous" th:if="${PaginationList.showPrevious}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:each="pageNumber:${PaginationList.pageNumberList}"
+                    th:class="${pageNumber==PaginationList.currentPage?'active':''}">
+                    <a th:href="'/?startNumber='+${pageNumber}"  th:text="${pageNumber}">1</a>
+                </li>
+                <li><a th:href="'/?startNumber='+${PaginationList.currentPage+1}" aria-label="Next" th:if="${PaginationList.showNext}"><span aria-hidden="true">&raquo;</span></a>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <nav>
+            <h2 class="second-title">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                <a href="/">最新发布</a>
+            </h2>
+        </nav>
+        常用链接
+        <ul>
+            <li>Elastic 官方网站</li>
+            <li>Elastic Github</li>
+            <li>Elasticsearch 权威指南中文版(2.x)</li>
+            <li>Kibana 中文手册(6.0)</li>
+            <li>Elasticsearch-PHP 中文手册(6.0)</li>
+            <li>Elastic 官方技术博客</li>
+            <li>Elastic 搜索开发实战</li>
+            <li>Elastic 社区分享回放</li>
+            <li>Elastic 社区电台节目</li>
+            <li>Elastic 社区百格活动</li>
+            <li>Elastic 社区Meetup</li>
+            <li>Elastic 社区用户大会</li>
+            <li>Elastic 社区IT大咖说</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+<script src="../static/js/index.js"></script>
+</html>

@@ -62,6 +62,13 @@
       "unicode_decimal": 58908
     },
     {
+      "icon_id": "34452768",
+      "name": "business-icon-feeds-fill",
+      "font_class": "business-icon-feeds-fill",
+      "unicode": "e823",
+      "unicode_decimal": 59427
+    },
+    {
       "icon_id": "34452882",
       "name": "message-comments",
       "font_class": "message-comments",
@@ -95,6 +102,13 @@
       "font_class": "share",
       "unicode": "e841",
       "unicode_decimal": 59457
+    },
+    {
+      "icon_id": "34453222",
+      "name": "image-text-fill",
+      "font_class": "image-text-fill",
+      "unicode": "e859",
+      "unicode_decimal": 59481
     }
   ]
 }

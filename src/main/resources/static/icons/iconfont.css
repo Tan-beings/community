@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1685508488324') format('truetype');
+  src: url('iconfont.ttf?t=1686648825746') format('truetype');
 }
 
 .iconfont {
@@ -43,6 +43,10 @@
   content: "\e61c";
 }
 
+.icon-business-icon-feeds-fill:before {
+  content: "\e823";
+}
+
 .icon-message-comments:before {
   content: "\e82e";
 }
@@ -61,5 +65,9 @@
 
 .icon-share:before {
   content: "\e841";
+}
+
+.icon-image-text-fill:before {
+  content: "\e859";
 }
 

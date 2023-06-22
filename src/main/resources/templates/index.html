@@ -13,6 +13,7 @@
     <script src="../static/bootstrap-3.4.1-dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <link href="../static/css/question.css" rel="stylesheet">
     <link href="../static/css/general.css" rel="stylesheet">
+    <link href="../static/css/search.css" rel="stylesheet">
     <script type="text/javascript">
         $(document).ready(function(){
             if(localStorage.getItem("closable") === "true"){
@@ -21,7 +22,7 @@
             }
         })
     </script>
-    <title>南特师BBS</title>
+    <title>星星之树社区</title>
 </head>
 <body>
 <nav th:insert="navigation :: nav"></nav>
@@ -34,11 +35,11 @@
             </h2>
         </nav>
     <div class="main-pages">
-    <div class="nav-tabs">
-    <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">Profile</a></li>
-        <li role="presentation"><a href="#">Messages</a></li>
+    <div class="nav-tabs show-choice-panel">
+    <ul class="nav nav-pills show-choice">
+        <li role="presentation" class="active"><a href="#">全部</a></li>
+        <li role="presentation" th:each="tag:${tags}" ><a href="#" th:attr="data-id=${tag.id}" th:href="@{'getAllRelatedQuestions/'+${tag.id}}" th:text="${tag.name}">Profile</a></li>
+
     </ul>
     </div>
     <ul class="list-group">
@@ -80,28 +81,32 @@
         <nav>
             <h2 class="second-title">
                 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-
-                <a href="/">最新发布</a>
+                <a href="/">电影推荐</a>
             </h2>
         </nav>
-        常用链接
-        <ul>
-            <li>Elastic 官方网站</li>
-            <li>Elastic Github</li>
-            <li>Elasticsearch 权威指南中文版(2.x)</li>
-            <li>Kibana 中文手册(6.0)</li>
-            <li>Elasticsearch-PHP 中文手册(6.0)</li>
-            <li>Elastic 官方技术博客</li>
-            <li>Elastic 搜索开发实战</li>
-            <li>Elastic 社区分享回放</li>
-            <li>Elastic 社区电台节目</li>
-            <li>Elastic 社区百格活动</li>
-            <li>Elastic 社区Meetup</li>
-            <li>Elastic 社区用户大会</li>
-            <li>Elastic 社区IT大咖说</li>
+        <ul class="list-group">
+            <li class="list-group-item">
+                《海洋天堂》
+            </li>
+            <li class="list-group-item">
+                《雨人》
+            </li>
+            <li class="list-group-item">
+                《自闭历程》
+            </li>
+            <li class="list-group-item">
+                《真情电波》
+            </li><li class="list-group-item">
+            《逆戟鲸》
+        </li><li class="list-group-item">
+            《我的名字叫可汗》
+        </li><li class="list-group-item">
+            《黑气球》
+        </li>
         </ul>
     </div>
 </main>
 
 </body>
+<script src="../static/js/index.js"></script>
 </html>

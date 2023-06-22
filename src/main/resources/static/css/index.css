@@ -1,0 +1,15 @@
+.panel-title{
+    font-weight: 600;
+    font-size: 18px;
+
+    background-image:-webkit-linear-gradient(60deg,#f76707,#fa5252);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+.panel-title .iconfont{
+    font-size: 24px;
+}
+
+.headline-pic{
+    width: 75%;
+}

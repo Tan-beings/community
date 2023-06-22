@@ -3,6 +3,7 @@ package com.tanquandan.blogsystem.controller;
 import com.tanquandan.blogsystem.DAO.Question;
 import com.tanquandan.blogsystem.DAO.Tag;
 import com.tanquandan.blogsystem.DTO.CommentDTO;
+import com.tanquandan.blogsystem.DTO.PaginationDTO;
 import com.tanquandan.blogsystem.DTO.QuestionDTO;
 import com.tanquandan.blogsystem.DTO.RequestDTO;
 import com.tanquandan.blogsystem.Service.CommentService;
@@ -26,6 +27,7 @@ public class QuestionController {
     CommentService commentService;
     @Autowired
     TagService tagService;
+
 
     @GetMapping("/question/{id}")
     public String toQuestion(@PathVariable(name="id")int id,
@@ -86,6 +88,18 @@ public class QuestionController {
         List<QuestionDTO> questionDTOS = questionService.queryRelatedQuestions(questionId,tags);
         return new RequestDTO<>(200,questionDTOS);
     }
+
+    @ResponseBody
+    @GetMapping("/getAllRelatedQuestions/{tagId}")
+    public String getAllRelatedQuestion(@PathVariable(name="tagId")String tagId,
+                                       @RequestParam(name="startNumber",defaultValue= "1")int offset,
+                                       @RequestParam(name="size",defaultValue = "5")int size,
+                                        Model model){
+        PaginationDTO<QuestionDTO> PaginationList = questionService.queryAllRelatedQuestions(tagId, offset, size);
+        model.addAttribute("PaginationList",PaginationList);
+        return "index";
+    }
+
 
 
 

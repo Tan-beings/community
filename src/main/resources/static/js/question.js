@@ -7,7 +7,6 @@ $(window).load(function(){
         if(data.data.length > 0) {
             $.each(data.data, function (key, question) {
                 const html = `<li class="list-group-item"><a target="_blank" href="/question/${question.id}">${question.title}</a></li>`;
-
                 $(html).appendTo($(".author-questions-list"));
             });
         }

@@ -56,4 +56,42 @@
     join fk_tag_question ftq on ftq.fk_question_id  = q.id and fk_tag_id in ${tagIds} where q.id != #{questionId} order by gmt_create desc limit 0,#{size};
   </select>
 
+  <select id="selectAllRelatedQuestions"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from question q
+    join fk_tag_question ftq on  fk_tag_id = ${tagId} and fk_question_id = q.id  order by gmt_create desc limit #{offset},#{size};
+  </select>
+
+  <select id="selectAllRelatedQuestionsCount"  resultType="Integer">
+    select
+    count(*)
+    from question q
+    join fk_tag_question ftq on  fk_tag_id = ${tagId} and fk_question_id = q.id  order by gmt_create desc;
+  </select>
+
+  <select id="selectSearchQuestions" resultMap="BaseResultMap">
+    select * from question
+    <where>
+      <if test="search != null">
+        and title regexp #{search}
+      </if>
+    </where>
+    limit #{offset},#{size}
+#     order by gmt_create desc
+
+  </select>
+
+  <select id="selectSearchQuestionsCount" resultType="Integer">
+      select count(*) from question
+      <where>
+        <if test="search != null">
+          and title regexp #{search}
+        </if>
+      </where>
+      limit #{offset},#{size}
+
+  </select>
+
+
 </mapper>
